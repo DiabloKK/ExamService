@@ -1,5 +1,7 @@
 package com.exam.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +9,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,13 +18,42 @@ public class User {
     private String lastName;
     private String email;
     private String phone;
-    private boolean enabled;
+    private boolean enable = true;
     private String profile;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users")
-    private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @JsonIgnore
+    private Set<UserRole> userRoles = new HashSet<>();
 
     public User() {
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public User(Long id, String username, String password, String firstName, String lastName, String email, String phone, boolean enable, String profile) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.enable = enable;
+        this.profile = profile;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public Long getId() {
@@ -82,27 +112,11 @@ public class User {
         this.phone = phone;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isEnable() {
+        return enable;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

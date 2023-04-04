@@ -7,25 +7,26 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 public class Role {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleId;
     private String roleName;
 
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users = new HashSet<>();
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "role")
+    private Set<UserRole> userRoles = new HashSet<>();
 
     public Role() {
     }
 
-    public Role(String roleName) {
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    public Role(Long roleId, String roleName) {
+        this.roleId = roleId;
         this.roleName = roleName;
     }
 
@@ -45,3 +46,5 @@ public class Role {
         this.roleName = roleName;
     }
 }
+
+
