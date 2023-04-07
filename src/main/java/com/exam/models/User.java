@@ -1,7 +1,6 @@
 package com.exam.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -74,22 +73,22 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public void setUsername(String username) {
@@ -104,7 +103,7 @@ public class User implements UserDetails {
             set.add(new Authority(userRole.getRole().getRoleName()));
         });
 
-        return null;
+        return set;
     }
 
     public String getPassword() {
