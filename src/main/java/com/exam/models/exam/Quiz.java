@@ -29,6 +29,14 @@ public class Quiz {
     public Quiz() {
     }
 
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
+
     public Category getCategory() {
         return category;
     }
