@@ -14,6 +14,7 @@ public class Quiz {
     private Long qId;
 
     private String title;
+    @Column(length = 5000)
     private String description;
     private String maxMarks;
     private String numberOfQuestions;
